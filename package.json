@@ -1,0 +1,51 @@
+{
+	"name": "problem-response",
+	"version": "0.0.0-development",
+	"description": "RFC 9457 Problem Details for HTTP APIs — framework-agnostic, TypeScript-first error responses",
+	"license": "MIT",
+	"repository": "mstuart/problem-response",
+	"author": {
+		"name": "Mark Stuart",
+		"email": "mstuart@users.noreply.github.com",
+		"url": "https://github.com/mstuart"
+	},
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./index.d.ts",
+			"default": "./index.js"
+		}
+	},
+	"sideEffects": false,
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"test": "xo && ava && tsd"
+	},
+	"keywords": [
+		"rfc9457",
+		"rfc7807",
+		"problem",
+		"details",
+		"http",
+		"error",
+		"api",
+		"rest",
+		"response",
+		"json"
+	],
+	"dependencies": {
+		"error-with-cause": "^0.0.0-development"
+	},
+	"devDependencies": {
+		"ava": "^6",
+		"tsd": "^0.31",
+		"xo": "^0.60"
+	},
+	"xo": {
+		"rules": {
+			"@typescript-eslint/naming-convention": "off"
+		}
+	}
+}
