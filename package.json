@@ -1,6 +1,6 @@
 {
 	"name": "problem-response",
-	"version": "0.0.0-development",
+	"version": "1.0.0",
 	"description": "RFC 9457 Problem Details for HTTP APIs — framework-agnostic, TypeScript-first error responses",
 	"license": "MIT",
 	"repository": "mstuart/problem-response",
