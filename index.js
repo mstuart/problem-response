@@ -13,7 +13,7 @@ export class ProblemDetail extends Error {
 		super(detail ?? title ?? 'Problem Detail');
 		this.name = 'ProblemDetail';
 
-		if (typeof status !== 'number' || !Number.isInteger(status) || status < 100 || status > 599) {
+		if (typeof status !== 'number' || !Number.isSafeInteger(status) || status < 100 || status > 599) {
 			throw new TypeError('`status` must be a valid HTTP status code (100-599)');
 		}
 
