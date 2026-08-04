@@ -35,9 +35,6 @@
 		"response",
 		"json"
 	],
-	"dependencies": {
-		"error-with-cause": "^1.0.0"
-	},
 	"devDependencies": {
 		"ava": "^8",
 		"tsd": "^0.33",
