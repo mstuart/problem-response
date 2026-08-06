@@ -1,7 +1,7 @@
 {
 	"name": "problem-response",
 	"version": "1.0.0",
-	"description": "RFC 9457 Problem Details for HTTP APIs — framework-agnostic, TypeScript-first error responses",
+	"description": "RFC 9457 Problem Details for HTTP APIs \u2014 framework-agnostic, TypeScript-first error responses",
 	"license": "MIT",
 	"repository": "mstuart/problem-response",
 	"author": {
@@ -18,7 +18,7 @@
 	},
 	"sideEffects": false,
 	"engines": {
-		"node": ">=20"
+		"node": ">=22"
 	},
 	"scripts": {
 		"test": "xo && ava && tsd"
@@ -47,5 +47,8 @@
 		"rules": {
 			"@typescript-eslint/naming-convention": "off"
 		}
+	},
+	"overrides": {
+		"error-serialize": "^1.0.0"
 	}
 }
