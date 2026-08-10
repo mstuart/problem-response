@@ -1,52 +1,52 @@
 {
-	"name": "problem-response",
-	"version": "1.0.0",
-	"description": "RFC 9457 Problem Details for HTTP APIs \u2014 framework-agnostic, TypeScript-first error responses",
-	"license": "MIT",
-	"repository": "mstuart/problem-response",
-	"author": {
-		"name": "Mark Stuart",
-		"email": "mstuart@users.noreply.github.com",
-		"url": "https://github.com/mstuart"
-	},
-	"type": "module",
-	"exports": {
-		".": {
-			"types": "./index.d.ts",
-			"default": "./index.js"
-		}
-	},
-	"sideEffects": false,
-	"engines": {
-		"node": ">=22"
-	},
-	"scripts": {
-		"test": "ava && tsd",
-		"check": "ultracite check",
-		"fix": "ultracite fix"
-	},
-	"keywords": [
-		"rfc9457",
-		"rfc7807",
-		"problem",
-		"details",
-		"http",
-		"error",
-		"api",
-		"rest",
-		"response",
-		"json"
-	],
-	"dependencies": {
-		"error-with-cause": "^1.0.0"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "2.5.6",
-		"ava": "^8",
-		"tsd": "^0.33",
-		"ultracite": "7.10.2"
-	},
-	"overrides": {
-		"error-serialize": "^1.0.0"
-	}
+  "name": "problem-response",
+  "version": "1.0.0",
+  "description": "RFC 9457 Problem Details for HTTP APIs \u2014 framework-agnostic, TypeScript-first error responses",
+  "keywords": [
+    "rfc9457",
+    "rfc7807",
+    "problem",
+    "details",
+    "http",
+    "error",
+    "api",
+    "rest",
+    "response",
+    "json"
+  ],
+  "repository": "mstuart/problem-response",
+  "license": "MIT",
+  "author": {
+    "name": "Mark Stuart",
+    "email": "mstuart@users.noreply.github.com",
+    "url": "https://github.com/mstuart"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "scripts": {
+    "check": "ultracite check",
+    "fix": "ultracite fix",
+    "test": "ava && tsd"
+  },
+  "overrides": {
+    "error-serialize": "^1.0.0"
+  },
+  "dependencies": {
+    "error-with-cause": "^1.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.6",
+    "ava": "^8",
+    "tsd": "^0.33",
+    "ultracite": "7.10.2"
+  },
+  "engines": {
+    "node": ">=22"
+  }
 }
