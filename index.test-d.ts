@@ -1,21 +1,21 @@
-import {expectType, expectError} from 'tsd';
+import { expectError, expectType } from "tsd";
 import {
-	ProblemDetail,
-	toResponse,
-	isProblemDetail,
-	badRequest,
-	unauthorized,
-	forbidden,
-	notFound,
-	conflict,
-	unprocessableEntity,
-	internalServerError,
-	type ProblemDetailJson,
-	type ProblemResponse,
-} from './index.js';
+  badRequest,
+  conflict,
+  forbidden,
+  internalServerError,
+  isProblemDetail,
+  notFound,
+  ProblemDetail,
+  type ProblemDetailJson,
+  type ProblemResponse,
+  toResponse,
+  unauthorized,
+  unprocessableEntity,
+} from "./index.js";
 
 // ProblemDetail constructor
-const problem = new ProblemDetail({status: 404, detail: 'Not found'});
+const problem = new ProblemDetail({ detail: "Not found", status: 404 });
 expectType<ProblemDetail>(problem);
 expectType<string>(problem.type);
 expectType<string>(problem.title);
@@ -39,20 +39,20 @@ expectType<string>(response.body);
 // IsProblemDetail type guard
 const value: unknown = problem;
 if (isProblemDetail(value)) {
-	expectType<ProblemDetail>(value);
+  expectType<ProblemDetail>(value);
 }
 
 // Factory functions
-expectType<ProblemDetail>(badRequest('Bad'));
-expectType<ProblemDetail>(unauthorized('Unauth'));
-expectType<ProblemDetail>(forbidden('Forbidden'));
-expectType<ProblemDetail>(notFound('Not found'));
-expectType<ProblemDetail>(conflict('Conflict'));
-expectType<ProblemDetail>(unprocessableEntity('Invalid'));
-expectType<ProblemDetail>(internalServerError('Error'));
+expectType<ProblemDetail>(badRequest("Bad"));
+expectType<ProblemDetail>(unauthorized("Unauth"));
+expectType<ProblemDetail>(forbidden("Forbidden"));
+expectType<ProblemDetail>(notFound("Not found"));
+expectType<ProblemDetail>(conflict("Conflict"));
+expectType<ProblemDetail>(unprocessableEntity("Invalid"));
+expectType<ProblemDetail>(internalServerError("Error"));
 
 // Factory with extensions
-expectType<ProblemDetail>(badRequest('Bad', {traceId: '123'}));
+expectType<ProblemDetail>(badRequest("Bad", { traceId: "123" }));
 
 // Constructor requires status
 expectError(new ProblemDetail({}));
