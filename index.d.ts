@@ -1,52 +1,51 @@
-export type ProblemDetailOptions = {
-	/**
-	Extension members to include in the problem detail.
+export interface ProblemDetailOptions {
+  /**
+	A human-readable explanation specific to this occurrence of the problem.
 	*/
-	readonly [key: string]: unknown;
+  readonly detail?: string;
 
-	/**
+  /**
+	A URI reference that identifies the specific occurrence of the problem.
+	*/
+  readonly instance?: string;
+
+  /**
+	The HTTP status code for this problem.
+	*/
+  readonly status: number;
+
+  /**
+	A short, human-readable summary of the problem type.
+	*/
+  readonly title?: string;
+
+  /**
 	A URI reference that identifies the problem type.
 	@default 'about:blank'
 	*/
-	readonly type?: string;
-
-	/**
-	A short, human-readable summary of the problem type.
+  readonly type?: string;
+  /**
+	Extension members to include in the problem detail.
 	*/
-	readonly title?: string;
+  readonly [key: string]: unknown;
+}
 
-	/**
-	The HTTP status code for this problem.
-	*/
-	readonly status: number;
+export interface ProblemDetailJson {
+  readonly detail?: string;
+  readonly instance?: string;
+  readonly status: number;
+  readonly title: string;
+  readonly type: string;
+  readonly [key: string]: unknown;
+}
 
-	/**
-	A human-readable explanation specific to this occurrence of the problem.
-	*/
-	readonly detail?: string;
-
-	/**
-	A URI reference that identifies the specific occurrence of the problem.
-	*/
-	readonly instance?: string;
-};
-
-export type ProblemDetailJson = {
-	readonly [key: string]: unknown;
-	readonly type: string;
-	readonly title: string;
-	readonly status: number;
-	readonly detail?: string;
-	readonly instance?: string;
-};
-
-export type ProblemResponse = {
-	readonly status: number;
-	readonly headers: {
-		readonly 'content-type': 'application/problem+json';
-	};
-	readonly body: string;
-};
+export interface ProblemResponse {
+  readonly body: string;
+  readonly headers: {
+    readonly "content-type": "application/problem+json";
+  };
+  readonly status: number;
+}
 
 /**
 RFC 9457 Problem Details for HTTP APIs.
@@ -66,15 +65,15 @@ console.log(problem.toJSON());
 ```
 */
 export class ProblemDetail extends Error {
-	readonly type: string;
-	readonly title: string;
-	readonly status: number;
-	readonly detail: string | undefined;
-	readonly instance: string | undefined;
+  readonly type: string;
+  readonly title: string;
+  readonly status: number;
+  readonly detail: string | undefined;
+  readonly instance: string | undefined;
 
-	constructor(options: ProblemDetailOptions);
+  constructor(options: ProblemDetailOptions);
 
-	/**
+  /**
 	Returns an RFC 9457 compliant plain object.
 
 	@returns The problem detail as a plain object.
@@ -88,7 +87,7 @@ export class ProblemDetail extends Error {
 	// => {type: 'about:blank', title: 'Not Found', status: 404, detail: 'Not found'}
 	```
 	*/
-	toJSON(): ProblemDetailJson;
+  toJSON(): ProblemDetailJson;
 }
 
 /**
@@ -138,7 +137,10 @@ import {badRequest} from 'problem-response';
 const problem = badRequest('Invalid email format');
 ```
 */
-export function badRequest(detail?: string, extensions?: Record<string, unknown>): ProblemDetail;
+export function badRequest(
+  detail?: string,
+  extensions?: Record<string, unknown>
+): ProblemDetail;
 
 /**
 Create a 401 Unauthorized problem detail.
@@ -154,7 +156,10 @@ import {unauthorized} from 'problem-response';
 const problem = unauthorized('Token expired');
 ```
 */
-export function unauthorized(detail?: string, extensions?: Record<string, unknown>): ProblemDetail;
+export function unauthorized(
+  detail?: string,
+  extensions?: Record<string, unknown>
+): ProblemDetail;
 
 /**
 Create a 403 Forbidden problem detail.
@@ -170,7 +175,10 @@ import {forbidden} from 'problem-response';
 const problem = forbidden('Insufficient permissions');
 ```
 */
-export function forbidden(detail?: string, extensions?: Record<string, unknown>): ProblemDetail;
+export function forbidden(
+  detail?: string,
+  extensions?: Record<string, unknown>
+): ProblemDetail;
 
 /**
 Create a 404 Not Found problem detail.
@@ -186,7 +194,10 @@ import {notFound} from 'problem-response';
 const problem = notFound('User not found');
 ```
 */
-export function notFound(detail?: string, extensions?: Record<string, unknown>): ProblemDetail;
+export function notFound(
+  detail?: string,
+  extensions?: Record<string, unknown>
+): ProblemDetail;
 
 /**
 Create a 409 Conflict problem detail.
@@ -202,7 +213,10 @@ import {conflict} from 'problem-response';
 const problem = conflict('Username already taken');
 ```
 */
-export function conflict(detail?: string, extensions?: Record<string, unknown>): ProblemDetail;
+export function conflict(
+  detail?: string,
+  extensions?: Record<string, unknown>
+): ProblemDetail;
 
 /**
 Create a 422 Unprocessable Entity problem detail.
@@ -218,7 +232,10 @@ import {unprocessableEntity} from 'problem-response';
 const problem = unprocessableEntity('Validation failed');
 ```
 */
-export function unprocessableEntity(detail?: string, extensions?: Record<string, unknown>): ProblemDetail;
+export function unprocessableEntity(
+  detail?: string,
+  extensions?: Record<string, unknown>
+): ProblemDetail;
 
 /**
 Create a 500 Internal Server Error problem detail.
@@ -234,4 +251,7 @@ import {internalServerError} from 'problem-response';
 const problem = internalServerError('Unexpected failure');
 ```
 */
-export function internalServerError(detail?: string, extensions?: Record<string, unknown>): ProblemDetail;
+export function internalServerError(
+  detail?: string,
+  extensions?: Record<string, unknown>
+): ProblemDetail;
