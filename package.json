@@ -41,10 +41,10 @@
     "error-with-cause": "^1.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.7",
+    "@biomejs/biome": "2.5.8",
     "ava": "^8",
     "tsd": "^0.33",
-    "ultracite": "7.10.2"
+    "ultracite": "7.10.4"
   },
   "engines": {
     "node": ">=22"
