@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import test from "ava";
 import {
   badRequest,
@@ -11,6 +12,14 @@ import {
   unauthorized,
   unprocessableEntity,
 } from "./index.js";
+
+const packageJson = JSON.parse(
+  readFileSync(new URL("package.json", import.meta.url), "utf8")
+);
+
+test("package depends on the published error-with-cause release", (t) => {
+  t.is(packageJson.dependencies["error-with-cause"], "^1.0.0");
+});
 
 // ProblemDetail creation
 
