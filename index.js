@@ -7,6 +7,7 @@ const httpStatusTitles = {
   422: "Unprocessable Entity",
   500: "Internal Server Error",
 };
+const extensionsByProblem = new WeakMap();
 
 export class ProblemDetail extends Error {
   constructor({ type, title, status, detail, instance, ...extensions } = {}) {
@@ -29,10 +30,19 @@ export class ProblemDetail extends Error {
     this.status = status;
     this.detail = detail;
     this.instance = instance;
-    this._extensions = extensions;
+    extensionsByProblem.set(this, extensions);
 
     for (const [key, value] of Object.entries(extensions)) {
-      this[key] = value;
+      if (key in this) {
+        continue;
+      }
+
+      Object.defineProperty(this, key, {
+        configurable: true,
+        enumerable: true,
+        value,
+        writable: true,
+      });
     }
   }
 
@@ -51,8 +61,13 @@ export class ProblemDetail extends Error {
       json.instance = this.instance;
     }
 
-    for (const [key, value] of Object.entries(this._extensions)) {
-      json[key] = value;
+    for (const [key, value] of Object.entries(extensionsByProblem.get(this))) {
+      Object.defineProperty(json, key, {
+        configurable: true,
+        enumerable: true,
+        value,
+        writable: true,
+      });
     }
 
     return json;
@@ -60,8 +75,14 @@ export class ProblemDetail extends Error {
 }
 
 export function toResponse(problem) {
+  const json = problem.toJSON();
+
+  if (typeof json.toJSON === "function") {
+    json.toJSON = undefined;
+  }
+
   return {
-    body: JSON.stringify(problem.toJSON()),
+    body: JSON.stringify(json),
     headers: {
       "content-type": "application/problem+json",
     },
@@ -76,9 +97,12 @@ export function isProblemDetail(value) {
 function createFactory(status) {
   return (detail, extensions) =>
     new ProblemDetail({
-      detail,
-      status,
       ...extensions,
+      detail,
+      instance: undefined,
+      status,
+      title: undefined,
+      type: undefined,
     });
 }
 
