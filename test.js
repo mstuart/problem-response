@@ -278,7 +278,47 @@ test("factory functions accept extensions", (t) => {
   t.is(json.code, "VALIDATION");
 });
 
+test("factory extensions cannot replace RFC members", (t) => {
+  const problem = badRequest("Original detail", {
+    code: "VALIDATION",
+    detail: "Replacement detail",
+    instance: "/replacement",
+    status: 500,
+    title: "Replacement title",
+    type: "https://example.com/replacement",
+  });
+
+  t.deepEqual(problem.toJSON(), {
+    code: "VALIDATION",
+    detail: "Original detail",
+    status: 400,
+    title: "Bad Request",
+    type: "about:blank",
+  });
+});
+
 // Edge cases
+
+test("extension keys cannot replace the ProblemDetail prototype", (t) => {
+  const input = JSON.parse('{"status":400,"__proto__":{"polluted":true}}');
+  const problem = new ProblemDetail(input);
+
+  t.true(problem instanceof ProblemDetail);
+  t.false(Object.hasOwn(problem, "__proto__"));
+  t.deepEqual(
+    Object.getOwnPropertyDescriptor(problem.toJSON(), "__proto__").value,
+    { polluted: true }
+  );
+});
+
+test("extension keys cannot replace ProblemDetail internals", (t) => {
+  const input = JSON.parse('{"status":400,"_extensions":null,"toJSON":null}');
+  const problem = new ProblemDetail(input);
+
+  t.is(typeof problem.toJSON, "function");
+  t.is(problem.toJSON()._extensions, null);
+  t.is(problem.toJSON().toJSON, null);
+});
 
 test("extension keys do not override core properties in toJSON", (t) => {
   const problem = new ProblemDetail({
@@ -303,6 +343,22 @@ test("toResponse with extensions preserves them in body", (t) => {
   const response = toResponse(problem);
   const parsed = JSON.parse(response.body);
   t.deepEqual(parsed.errors, ["field required"]);
+});
+
+test("toResponse does not invoke callable extension members", (t) => {
+  const problem = new ProblemDetail({
+    status: 400,
+    toJSON: () => ({ hijacked: true }),
+    traceId: "trace-456",
+  });
+
+  const response = toResponse(problem);
+  t.deepEqual(JSON.parse(response.body), {
+    status: 400,
+    title: "Bad Request",
+    traceId: "trace-456",
+    type: "about:blank",
+  });
 });
 
 test("custom type URI is preserved", (t) => {
