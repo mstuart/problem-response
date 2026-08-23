@@ -1,7 +1,7 @@
 {
   "name": "problem-response",
-  "version": "1.0.0",
-  "description": "RFC 9457 Problem Details for HTTP APIs \u2014 framework-agnostic, TypeScript-first error responses",
+  "version": "1.0.1",
+  "description": "RFC 9457 Problem Details for HTTP APIs — framework-agnostic, TypeScript-first error responses",
   "keywords": [
     "rfc9457",
     "rfc7807",
