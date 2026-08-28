@@ -188,6 +188,13 @@ test("toResponse body is valid JSON string", (t) => {
   t.is(parsed.detail, "Gone");
 });
 
+test("toResponse includes extension members", (t) => {
+  const response = toResponse(
+    new ProblemDetail({ status: 400, traceId: "trace-123" })
+  );
+  t.is(JSON.parse(response.body).traceId, "trace-123");
+});
+
 // IsProblemDetail
 
 test("isProblemDetail returns true for ProblemDetail instances", (t) => {
