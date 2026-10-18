@@ -39,7 +39,12 @@
     "test": "ava && tsd"
   },
   "overrides": {
-    "error-serialize": "^1.0.0"
+    "error-serialize": "^1.0.0",
+    "supertap": {
+      "js-yaml": {
+        "argparse": "2.0.1"
+      }
+    }
   },
   "dependencies": {
     "error-with-cause": "^1.0.0"
